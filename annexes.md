@@ -93,7 +93,7 @@ Where $$1-p_{contradiction}$$ and $$1-p'_{contradiction}$$ are NLI similarities 
 
 ## I. Pair-wise address agrement
 
-![image](https://github.com/user-attachments/assets/be050376-4d21-47ed-ace2-6a5b2886c186)
+![image](https://github.com/user-attachments/assets/02ed5f2c-0c61-474a-86b8-cbbb8f7f88e5)
 
 **Figure 9.** Pair-wise address agreement (Jaccard similarity heatmaps).
 
