@@ -62,15 +62,39 @@ yonne”, ”ENTITIES”: {”NAME”: ”nicolas industrie”, ”STREET”: �
 
 Here, we take note on the advantage of using address aliases already identified in the
 retrieval set. In fact, if the LLM was only presented with the normalized version of the
-query matching address, it would have no problem rejecting the address candidate. Indeed, it is clearly apparent that the normalized street, **Avenue du tertre**, is completely
+query matching address, it would have no problem rejecting the address candidate. Indeed, it is clearly apparent that the normalized street, **Avenue du tertre**, is completely
 different from the alias street, **Rte nationale 6**.
 
 ## E. NLI scoring function
-Based on the NLI scoring strategy used in [31], we define our NLI scoring function s_nli(·) as the average of NLI similarities of three pre-trained multilingual crossencoders8910. We purposely chose to aggregate different models scores to alleviate the
-impact of false entailment. Specifically, the input of a NLI model is the concatenation
-of a query q and a retrieved address d upon which the model returns probabilities pi
-with i ∈ {contradiction,neutral, entailement}. We can then compute the NLI similarity
-as 1 − pcontradcition. As mentioned in [31], both orders (q,d) and (d,q) are considered
-to mitigate positional bias of the NLI system. The NLI similarity of a model E is then
-denoted:
+Based on the NLI scoring strategy used in [31], we define our NLI scoring function $$s_{nli}(\cdot)$$ as the average of NLI similarities of three pre-trained multilingual cross-encoders[^8][^9][^10]. We purposely chose to aggregate different models' scores to alleviate the impact of false entailment. Specifically, the input of an NLI model is the concatenation of a query $$q$$ and a retrieved address $$d$$ upon which the model returns probabilities $$p_i$$ with $$i\in\{contradiction, neutral, entailement\}$$. We can then compute the NLI similarity as $$1-p_{contradcition}$$. As mentioned in [31], both orders $$(q,d)$$ and $$(d,q)$$ are considered to mitigate positional bias of the NLI system. The NLI similarity of a model $$E$$ is then denoted:
 
+
+$$SIM_{E} = \frac{1}{2}(1-p_{contradiction} + 1-p'_{contradiction})$$ 
+
+Where $$1-p_{contradiction}$$ and $$1-p'_{contradiction}$$ are NLI similarities of $$(q, d)$$ and $$(d,q)$$ respectively.
+
+## G. Encoders description
+
+**DistilBERT [22]**: A lightweight transformer encoder distilled from BERT [9]. We fine-tuned its multilingual version11 to adapt it on our French postal address dataset.
+
+**CamemBERT [23]**: A RoBERTa-based [44] encoder pretrained specifically on large-scale French text[^12]. It is widely used on various downstream task due to its French language specificity. We fine-tuned it on our dataset to improve its ability to produce french postal address sentence embedding.
+
+**FlauBERT [25]**: Another French specific language encoder based on BERT. This model was trained on very large and heterogeneous French corpus. we used the base-cased version[^13] for our fine-tuning.
+
+**FrALBERT [26]**: An ALBERT-based [?] encoder, proposed as an alternative to BERT encoder. We chose the French language version[^14] to further fine-tune it.
+
+**XLM-RoBERTa [24]**: Yet another RoBERTa-based encoder. This encoder is very popular among researchers for its improved performance compared to other multilingual encoders. We adapt the base version[^15] as well on our dataset.
+
+## D. ccuracy and Precision at different values of $$k$$
+
+![image](https://github.com/user-attachments/assets/3d086fb1-572f-4fd3-b605-da74c9dede74)
+
+**Figure 8.** Accuracy and Precision at different $$k$$ values.
+
+## I. Pair-wise address agrement
+
+![image](https://github.com/user-attachments/assets/be050376-4d21-47ed-ace2-6a5b2886c186)
+
+**Figure 9.** Pair-wise address agreement (Jaccard similarity heatmaps).
+
+## J. Hallucinations
