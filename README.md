@@ -1,10 +1,10 @@
 # GeoRAG_annexes
 
 ## A. Address anomlies
-### A.1 Type of anomalies inbserved query-delivies
+### A.1. Type of anomalies inbserved query-delivies
 ![image](https://github.com/user-attachments/assets/13c03734-51ac-4a2c-8407-e4fc58c1e358)
 
-### A.1 Similar non matching query-deliveries
+### A.2. Similar non matching query-deliveries
 Below is an example of two similar query addresses where address names helped disambiguate the correct top-ranked match.
 
 ![name_context](https://github.com/user-attachments/assets/ace09b5e-e5af-415a-a620-a3d5ba2b16c2)
@@ -12,7 +12,7 @@ Below is an example of two similar query addresses where address names helped di
 **Figure 3.** Correct candidate address disambiguation
 
 ## B. Failed address identification
-### B.1 Google-Maps failed address identification
+### B.1. Google-Maps failed address identification
 In Figure 4, ”`sogif dept cond fce et travaux neuf dsm chemin de la plaine
 89 villeneuve-sur-yonne`” returns multiple potential POIs and non of them is the
 intended address.
@@ -28,7 +28,7 @@ rue naurat bp 1 89250 chemilly sur yonne`” returns no POI.
 
 **Figure 5.** Example of no returned POI on Google Maps
 
-### B.2 Example of failed kNN-vote Top-ranked retrieval
+### B.2. Example of failed kNN-vote Top-ranked retrieval
 
 ![top_k_retrieval](https://github.com/user-attachments/assets/b7f941ce-52c8-4ce2-bc05-955c4fb70c6c)
 
@@ -47,11 +47,11 @@ We plot precision-recall curves, highlighting strong separability between valid 
 ![image](https://github.com/user-attachments/assets/51616d72-c517-44ff-982a-acbcd592578d)
 
 ## E. Prompt
-### E.1 Mistral prompt for LLM fine-tuning
+### E.1. Mistral prompt for LLM fine-tuning
 
 ![image](https://github.com/user-attachments/assets/888370db-bab9-46c0-920b-5e3a5dd15087)
 
-### E.2 Example of augmented retrieved reference address
+### E.2. Example of augmented retrieved reference address
 
 If we take for example the query-delivery, **Nicolas industrie bp 3 Route nationale 6
 89290 Champs Sur Yonne**, we can fetch its top-k reference list in a way where each candidate address or alias from the database is augmented with normalized address attributes. We then presented in the prompt in the form of a JSON object as follows:
@@ -97,4 +97,18 @@ Where $$1-p_{contradiction}$$ and $$1-p'_{contradiction}$$ are NLI similarities 
 
 **Figure 9.** Pair-wise address agreement (Jaccard similarity heatmaps).
 
-## J. Hallucinations
+## J. Examples of hallucinations (out of list selection)
+## J.1. Index level hallucination
+In Figure 9, we can see with a simple keyboard find function that the LLM predicted an index that wasn't originally in the top-10 alias candidate list.
+
+![image](https://github.com/user-attachments/assets/722839e3-3fa9-4c95-8cde-040e6f7e0c6b)
+
+**Figure 9.** Index level hallucination.
+
+## J.2. Index level hallucination
+
+In Figure 10, Same as index hallucination, the LLM subtly rewrites the address match rather then just selecting from the alias candidate list. 
+
+![image](https://github.com/user-attachments/assets/6dafde83-add1-4f7d-b339-c60dd2a381bf)
+
+**Figure 10.** Address level hallucination.
